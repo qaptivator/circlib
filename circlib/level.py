@@ -11,7 +11,7 @@ class Level:
         self.objects = objects
 
     @staticmethod
-    def parse(s):
+    def parse(s: str):
         headers: dict[str, list[str]] = {}
         objects: list[Object] = []
 
@@ -93,7 +93,24 @@ class Level:
 
         return res.strip()
     
-    # TODO: object manipulation from the level class
+    # didnt test those yet
+    def get_object_by_id(self, id: int) :
+        return list(filter(lambda v: v.id == id, self.objects))[0]
+    
+    def get_objects_by_type(self, type: str):
+        return list(filter(lambda v: v.id == type, self.objects))
+    
+    def create_object(self, type, props, connections = None):
+        obj = Object(next_avaiable_id(self.objects), type, props, connections)
+        self.objects.append(obj)
+        return obj
+    
+    def remove_object(self, obj):
+        self.objects.remove(obj)
+    
+    def remove_object_by_id(self, id: int):
+        self.remove_object(self.get_object_by_id(id))
+
 
 """/
 / circloO level

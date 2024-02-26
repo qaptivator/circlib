@@ -53,6 +53,13 @@ def ingame_to_level_x(x):
 def ingame_to_level_y(y):
     return y - 384
 
+def next_avaiable_id(m):
+    max_id = -1 # if the starting index is 0
+    for v in m:
+        if v.id > max_id:
+            max_id = v.id
+    return max_id + 1
+
 class Lookup:
     table = {}
     table_inv = {}

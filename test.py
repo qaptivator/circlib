@@ -181,4 +181,4 @@ spc 'Off'
 
 lvl_obj = Level.parse(craze)
 print(lvl_obj.stringify())
-#print(lvl_obj.objects)
+#print(type(lvl_obj.objects[0].id))
