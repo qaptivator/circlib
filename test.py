@@ -165,8 +165,20 @@ pr 0.45 -0.89 -1 -1 0 0
 < 34
 / GLUE 10 11
 < 35
+> 29
+> 10
+spc 'Follow'
+< 36
+> 30
+> 16
+spc 'On'
+< 37
+> 29
+> 15
+spc 'Off'
+< 38
 """
 
-lvl_obj = Level.parse(lvl)
+lvl_obj = Level.parse(craze)
 print(lvl_obj.stringify())
 #print(lvl_obj.objects)

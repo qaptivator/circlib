@@ -1,98 +1,10 @@
-import json
-def print_dict(d):
-    print(json.dumps(d, sort_keys=True, indent=4))
-
-def _get_props(line): # get props from line
-    #line = line.strip()
-    #if not header: 
-    #    continue
-    #if line.startswith('/'):
-    #    line = line[2:]
-    res = list(filter(None, line.split(' ')))
-    if res[0] == '/':
-        new_prefix = '/ ' + res[1] # create new prefix ['/', 'EDT', '123'] -> '/ EDT'
-        res[1] = new_prefix # change second element ['/', 'EDT', '123'] -> ['/', '/ EDT', '123']
-        res = res[1:] # remove first element ['/', '/ EDT', '123'] -> ['/ EDT', '123']
-    return res
-
-def _skip_iters(iter, n=1):
-    for _ in range(n):
-        next(iter)
-
-def _inv_map(m):
-    return {v: k for k, v in m.items()}
-
-def _list_to_string(list):
-    #return ' '.join(list)
-    res = ''
-    for el in list:
-        if el.isnumeric():
-            res += f"{el} "
-        else:
-            res += el + ' ' # f"'{el}'"
-    return res.strip()
-
-class Lookup:
-    m = {}
-    inv_m = {}
-    def __init__(self, m):
-        self.m = m
-        self.inv_m = _inv_map(m)
-    def get(self, key, default=None):
-        return self.m.get(key, default)
-    def get_inv(self, key, default=None):
-        return self.inv_m.get(key, default)
-# ingame name to library name, just so fields would be more understandable
-HEADER_TYPE_LOOKUP = Lookup({
-    "totalCircles": "totalCircles",
-    "/ EDITOR_TOOL": "editorTool",
-    "/ EDITOR_VIEW": "editorView",
-    "/ EDT": "edit",
-    "grav": "gravity",
-    "levelscriptVersion": "levelscriptVersion",
-    "COLORS": "colors"
-})
-
-# ingame type to library type, also acts as a whitelist for prefixes, like ignoring properties of an arc
-OBJECT_TYPE_LOOKUP = Lookup({
-    "c": "fixed_circle",
-    "b": "fixed_rectangle",
-    "t": "triangle",
-    "l_at": "line",
-    "/ LE_ARC_DESCRIPTION": "arc",
-    "curve": "bezier_curve",
-    "gc": "growing_circle",
-    "rGr": "growing_rectangle",
-
-    "mcG": "movable_circle",
-    "mb": "movable_rectangle",
-    "mtG": "movable_triangle",
-    "GLUE": "superglue_connection",
-
-    "r": "rope_connection",
-    "p": "pulley_connection",
-    "hinge": "hinge_connection",
-    "pr": "prismatic_connection",
-    "rr": "rotatable_rectangle",
-    "rc": "rotatable_circle",
-    "wr": "springy_rectangle",
-    "tmc": "ball_generator",
-    "tmb": "box_generator", # is it supposed to be rectangle?
-    "portal": "portal",
-
-    "y": "start",
-    "ic": "collectable" # there is actually a ton of types of collectables
-})
-
-SLASH_LOOKUP = Lookup({
-    "LE_ARC_DESCRIPTION": "/ LE_ARC_DESCRIPTION",
-    "p_description": "/ p_description",
-    "EDITOR_TOOL": "/ EDITOR_TOOL"
-})
+from .utils import *
+from .constants import *
+from .object import Object
 
 class Level:
-    headers = {}
-    objects = []
+    headers: dict[str, list[str]] = {}
+    objects: list[Object] = []
 
     def __init__(self, headers, objects):
         self.headers = headers
@@ -100,71 +12,88 @@ class Level:
 
     @staticmethod
     def parse(s):
-        # TODO: parse and stringify connections
-        headers = {}
-        objects = []
+        headers: dict[str, list[str]] = {}
+        objects: list[Object] = []
 
         lines = s.strip().split("\n")[3:] # first 3 lines are useless
-        temp_object = None
+        #temp_object = None
+        temp_object = {}
         # {
         #    "type": '',
         #    "props": [],
+        #    "connections": [], # only present in connections
         #    "id": 0
         # }
 
         # get the headers (first 8 lines)
-        for header in lines[:8]:
-            props = _get_props(header)
-            header_type = HEADER_TYPE_LOOKUP.get(props[0])
+        for header in lines[:HEADER_LINES]:
+            props = get_props(header)
+            header_type = HEADER_TYPES.get(props[0])
             if header_type:
                 header_name = header_type  # HEADER_TYPE_LOOKUP[props[0]] if HEADER_TYPE_LOOKUP[props[0]] else props[0]
                 headers[header_name] = props[1:]
 
-        lines = lines[8:] # we dont need those headers anymore
+        lines = lines[HEADER_LINES:] # we dont need those headers anymore
 
         # get the objects
         lines_iter = iter(lines)
         for object in lines_iter:
-            props = _get_props(object)
-            object_type = OBJECT_TYPE_LOOKUP.get(props[0])
+            props = get_props(object)
+            object_type = OBJECT_TYPES.get(props[0])
             if props[0] == '<':
-                if temp_object is not None:
+                if temp_object.get("type"): # temp_object is not None
                     temp_object["id"] = int(props[1])
-                    objects.append(temp_object)
-                    temp_object = None
+
+                    objects.append(Object.from_object(temp_object))
+                    #objects.append(temp_object)
+
+                    temp_object = {}
+                    #temp_object = None
+            elif props[0] == '>':
+                if not temp_object.get("connections"):
+                    temp_object["connections"] = []
+                temp_object["connections"].append(int(props[1]))
             elif props[0] == 'SKIP':
-                _skip_iters(lines_iter, int(props[1]))
+                skip_iters(lines_iter, int(props[1]))
             elif object_type is not None:
-                temp_object = {
-                    "type": object_type, # OBJECT_TYPE_LOOKUP[props[0]],
-                    "props": props[1:],
-                }
+                temp_object["type"] = object_type
+                temp_object["props"] = props[1:]
+                #temp_object = {
+                #    "type": object_type, # OBJECT_TYPE_LOOKUP[props[0]],
+                #    "props": props[1:],
+                #}
 
         return Level(headers, objects)
     
     def stringify(self):
-        LEVEL_PREFIX = '''/
-/ circloO level
-/ Made with circloO Level Editor v1.3
-'''
         res = LEVEL_PREFIX
 
         def _add_line(str, line):
             return str + line + '\n'
         
         for key, value in self.headers.items():
-            header = HEADER_TYPE_LOOKUP.get_inv(key)
+            header = HEADER_TYPES.get_inv(key)
             if header:
-                res = _add_line(res, f'{header} {_list_to_string(value)}') # f'/ {header} {_list_to_string(value)}'
+                res = _add_line(res, f'{header} {list_to_string(value)}') # f'/ {header} {_list_to_string(value)}'
 
         for object in self.objects:
-            if object["id"] and object["type"] and object["props"]:
-                object_type = OBJECT_TYPE_LOOKUP.get_inv(object["type"]) # should add a check for a slash here
+            if object.id and object.type and object.props:
+                object_type = object.get_ingame_type()
                 if object_type:
-                    res = _add_line(res, f'{object_type} {_list_to_string(object["props"])}')
-                    res = _add_line(res, f'< {object["id"]}')
+                    if object.is_connection():
+                        for connection in object.get_connections():
+                            res = _add_line(res, f'> {connection}')
+                    
+                    res = _add_line(res, f'{object_type} {list_to_string(object.props)}')
+
+                    if object_type == 'y': # specific case just for start
+                        res = _add_line(res, 'bullet')
+
+                    res = _add_line(res, f'< {object.id}')
 
         return res.strip()
+    
+    # TODO: object manipulation from the level class
 
 """/
 / circloO level
@@ -259,4 +188,94 @@ indexes are actualy minus one
 34 collectable on collision + changes player circle speed -> ic 'ipso'
 35 collectable special -> ic 'isp'
 36 collectable on collision with other special -> ic 'ispo'
+'''
+'''
+class OldLevel:
+    headers = {}
+    objects = []
+
+    def __init__(self, headers, objects):
+        self.headers = headers
+        self.objects = objects
+
+    @staticmethod
+    def parse(s):
+        # TODO: parse and stringify connections
+        headers = {}
+        objects = []
+
+        lines = s.strip().split("\n")[3:] # first 3 lines are useless
+        #temp_object = None
+        temp_object = {}
+        # {
+        #    "type": '',
+        #    "props": [],
+        #    "connections": [], # only present in connections
+        #    "id": 0
+        # }
+
+        # get the headers (first 8 lines)
+        for header in lines[:8]:
+            props = get_props(header)
+            header_type = HEADER_TYPES.get(props[0])
+            if header_type:
+                header_name = header_type  # HEADER_TYPE_LOOKUP[props[0]] if HEADER_TYPE_LOOKUP[props[0]] else props[0]
+                headers[header_name] = props[1:]
+
+        lines = lines[HEADER_LINES:] # we dont need those headers anymore
+
+        # get the objects
+        lines_iter = iter(lines)
+        for object in lines_iter:
+            props = get_props(object)
+            object_type = OBJECT_TYPES.get(props[0])
+            if props[0] == '<':
+                if temp_object is not None:
+                    temp_object["id"] = int(props[1])
+                    objects.append(temp_object)
+                    temp_object = {}
+                    #temp_object = None
+            elif props[0] == '>':
+                if not temp_object.get("connections"):
+                    temp_object["connections"] = []
+                temp_object["connections"].append(int(props[1]))
+            elif props[0] == 'SKIP':
+                skip_iters(lines_iter, int(props[1]))
+            elif object_type is not None:
+                temp_object["type"] = object_type
+                temp_object["props"] = props[1:]
+                #temp_object = {
+                #    "type": object_type, # OBJECT_TYPE_LOOKUP[props[0]],
+                #    "props": props[1:],
+                #}
+
+        return Level(headers, objects)
+    
+    def stringify(self):
+        res = LEVEL_PREFIX
+
+        def _add_line(str, line):
+            return str + line + '\n'
+        
+        for key, value in self.headers.items():
+            header = HEADER_TYPES.get_inv(key)
+            if header:
+                res = _add_line(res, f'{header} {list_to_string(value)}') # f'/ {header} {_list_to_string(value)}'
+
+        for object in self.objects:
+            if object.get("id") and object.get("type") and object.get("props"):
+                object_type = OBJECT_TYPES.get_inv(object["type"]) # should add a check for a slash here
+                if object_type:
+                    if object.get("connections"):
+                        for connection in object["connections"]:
+                            res = _add_line(res, f'> {connection}')
+                    
+                    res = _add_line(res, f'{object_type} {list_to_string(object["props"])}')
+
+                    if object_type == 'y': # specific case just for start
+                        res = _add_line(res, 'bullet')
+
+                    res = _add_line(res, f'< {object["id"]}')
+
+        return res.strip()
 '''
