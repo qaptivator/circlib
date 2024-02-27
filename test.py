@@ -179,6 +179,17 @@ spc 'Off'
 < 38
 """
 
-lvl_obj = Level.parse(craze)
-print(lvl_obj.stringify())
+#lvl_obj = Level.parse(craze)
+#print(lvl_obj.stringify())
 #print(type(lvl_obj.objects[0].id))
+new_level = Level()
+# b x1563 y1368 w102 h52 r0
+# x and y differ from ingame
+# width and height are two times smaller in file than in game
+new_level.create_object("fixed_rectangle", ["1563", "1368", "102", "52", "0"])
+new_level.create_object("fixed_rectangle", ["1363", "1330", "10", "200", "15"]) # ingame: 2173 1514 20 400 15
+new_level.create_object("rope_connection", ["0", "0", "0", "0", "0"], ["0", "1"])
+print(new_level.stringify())
+
+# b1   x1563 y1368 w102 h52 r0   ->   x2281 y1700 w204 h104  718 332
+# b2   x1424 y1300 w103 h40 r0   ->   x2414 y1644 w206 h80   990 344

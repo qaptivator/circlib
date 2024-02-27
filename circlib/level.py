@@ -6,7 +6,7 @@ class Level:
     headers: dict[str, list[str]] = {}
     objects: list[Object] = []
 
-    def __init__(self, headers, objects):
+    def __init__(self, headers = DEFAULT_HEADERS, objects = []):
         self.headers = headers
         self.objects = objects
 
@@ -77,7 +77,8 @@ class Level:
                 res = _add_line(res, f'{header} {list_to_string(value)}') # f'/ {header} {_list_to_string(value)}'
 
         for object in self.objects:
-            if object.id and object.type and object.props:
+            # it was removing the first object because apparently 0 is a falsy value
+            if object.id is not None and object.type is not None and object.props is not None:
                 object_type = object.get_ingame_type()
                 if object_type:
                     if object.is_connection():

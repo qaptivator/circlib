@@ -77,5 +77,28 @@ LEVEL_PREFIX = '''/
 / Made with circloO Level Editor v1.3
 '''
 
+DEFAULT_HEADERS = {
+    "totalCircles": ["7", "0"],
+    "editorTool": ["0"],
+    "editorView": ["2320", "1884", "1"],
+    "edit": ["252"],
+    "levelscriptVersion": ["5"],
+    "colors": ["166"], # these are random
+    "gravity": ["1", "270"]
+}
+
+# default level
+'''/
+/ circloO level
+/ Made with circloO Level Editor v1.3
+totalCircles 7 0
+/ EDITOR_TOOL 0 
+/ EDITOR_VIEW 2320 1884 1
+/ EDT 252
+/ _SAVE_TIME_1709037038000_END
+levelscriptVersion 5
+COLORS 166
+grav 1 270'''
+
 # amount of header lines
 HEADER_LINES = 8
