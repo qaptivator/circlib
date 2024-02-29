@@ -10,7 +10,7 @@ class Object:
     def __init__(self, id=0, type='', props=[], connections=[]):
         self.id = id
         self.type = type
-        self.props = props
+        self.props = props_to_list(props)
         self.connections = connections
 
     @staticmethod
@@ -27,6 +27,9 @@ class Object:
     
     def get_ingame_type(self):
         return OBJECT_TYPES.get_inv(self.type)
+
+    def get_ingame_props(self):
+        return list_to_string(self.props)
         
     def get_connections(self):
         if self.is_connection():

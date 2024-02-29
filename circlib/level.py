@@ -85,7 +85,8 @@ class Level:
                         for connection in object.get_connections():
                             res = _add_line(res, f'> {connection}')
                     
-                    res = _add_line(res, f'{object_type} {list_to_string(object.props)}')
+                    # res = _add_line(res, f'{object_type} {list_to_string(object.props)}')
+                    res = _add_line(res, f'{object_type} {object.get_ingame_props()}')
 
                     if object_type == 'y': # specific case just for start
                         res = _add_line(res, 'bullet')
@@ -99,7 +100,7 @@ class Level:
         return list(filter(lambda v: v.id == id, self.objects))[0]
     
     def get_objects_by_type(self, type: str):
-        return list(filter(lambda v: v.id == type, self.objects))
+        return list(filter(lambda v: v.type == type, self.objects))
     
     def create_object(self, type, props, connections = None):
         obj = Object(next_avaiable_id(self.objects), type, props, connections)

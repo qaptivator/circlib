@@ -36,16 +36,31 @@ def value_to_string(value):
         else:
             return f"'{value}'"
 
+def prop_to_value(value):
+    #if is_numeric(value):
+    #    return float(value)
+    #else:
+    #    return value
+    if value.isdigit():
+        return int(value)
+    elif value.replace('.', '', 1).isdigit(): 
+        return float(value)
+    else:
+        return value
+
 def list_to_string(list):
     #return ' '.join(list)
     res = ''
     for el in list:
-        res += value_to_string(el) + ' '
+        res += value_to_string(f"{el}") + ' '
         #if el.isnumeric():
         #    res += f"{el} "
         #else:
         #    res += el + ' ' # f"'{el}'"
     return res.strip()
+
+def props_to_list(props):
+    return list(map(lambda el: prop_to_value(el), props))
 
 def ingame_to_level_x(x):
     return x - 820
