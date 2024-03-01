@@ -10,7 +10,7 @@ class Object:
     def __init__(self, id=0, type='', props=[], connections=[]):
         self.id = id
         self.type = type
-        self.props = props_to_list(props)
+        self.props = string_to_list(props)
         self.connections = connections
 
     @staticmethod
