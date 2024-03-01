@@ -64,6 +64,7 @@ def string_to_value(v):
                 return v
 
 def value_to_string(v):
+    v = string_to_value(v)
     if isinstance(v, int) or isinstance(v, float):
         return str(v)
     else:

@@ -78,13 +78,13 @@ LEVEL_PREFIX = '''/
 '''
 
 DEFAULT_HEADERS = {
-    "totalCircles": ["7", "0"],
-    "editorTool": ["0"],
-    "editorView": ["2320", "1884", "1"],
-    "edit": ["252"],
-    "levelscriptVersion": ["5"],
-    "colors": ["166"], # these are random
-    "gravity": ["1", "270"]
+    "totalCircles": [7, 0],
+    "editorTool": [0],
+    "editorView": [2320, 1884, 1],
+    "edit": [252],
+    "levelscriptVersion": [5],
+    "colors": [166], # these are random
+    "gravity": [1, 270]
 }
 
 # default level
