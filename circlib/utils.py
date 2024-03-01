@@ -27,40 +27,60 @@ def inv_map(m: dict[any, any]) -> dict[any, any]:
 def is_numeric(v):
     return re.match(r'^-?\d+\.?\d*$', v) is not None
 
-def value_to_string(value):
-    if is_numeric(value): # isnumeric() and isdigit() doesn't work with fractions and negatives
-        return f"{value}"
-    else:
-        if value.startswith("'") and value.endswith("'"):
-            return value
-        else:
-            return f"'{value}'"
+#def value_to_string(value):
+#    if is_numeric(value): # isnumeric() and isdigit() doesn't work with fractions and negatives
+#        return f"{value}"
+#    else:
+#        if value.startswith("'") and value.endswith("'"):
+#            return value
+#        else:
+#            return f"'{value}'"
 
-def prop_to_value(value):
+#def prop_to_value(value):
     #if is_numeric(value):
     #    return float(value)
     #else:
     #    return value
-    if value.isdigit():
-        return int(value)
-    elif value.replace('.', '', 1).isdigit(): 
-        return float(value)
+#    if value.isdigit():
+#        return int(value)
+#    elif value.replace('.', '', 1).isdigit(): 
+#        return float(value)
+#    else:
+#        return value
+
+def string_to_value(v):
+    v = str(v)
+    try:
+        num = int(v)
+        return num
+    except ValueError:
+        try:
+            num = float(v)
+            return num
+        except ValueError:
+            if v.startswith("'") and v.endswith("'"):
+                return v[1:-1]
+            else:
+                return v
+
+def value_to_string(v):
+    if isinstance(v, int) or isinstance(v, float):
+        return str(v)
     else:
-        return value
+        if v.startswith("'") and v.endswith("'"):
+            return v
+        else:
+            return f"'{v}'"
 
 def list_to_string(list):
     #return ' '.join(list)
     res = ''
     for el in list:
-        res += value_to_string(f"{el}") + ' '
-        #if el.isnumeric():
-        #    res += f"{el} "
-        #else:
-        #    res += el + ' ' # f"'{el}'"
+        res += value_to_string(el) + ' '
     return res.strip()
 
-def props_to_list(props):
-    return list(map(lambda el: prop_to_value(el), props))
+def string_to_list(props):
+    return list(map(lambda el: string_to_value(el), props))
 
 def ingame_to_level_x(x):
     return x - 820
