@@ -1,12 +1,14 @@
 # circlib
+
 Python library for creating and editing CircloO levels
 Currently the library isn't hosted on PyPi, so instead, just clone the repository and then extract the `circlib` folder.
 `git clone https://github.com/qaptivator/circlib.git`
 
-#  Usage
+# Usage
 
 Here are some examples of how you can use this library.
 You can parse an arleady existing level:
+
 ```py
 from circlib import Level
 
@@ -16,14 +18,18 @@ print(level.stringify())
 ```
 
 Or create a new one from scratch:
+
 ```py
 level = Level()
 level.create_object("fixed_rectangle", ["1500", "1300", "50", "50", "45"])
 ```
 
+**Note:** strings which are not numbers in the properties of the object automatically get surrounded by '' (quotes). It does not happen when you add a newline to the start of the prop, for example: `\nnoanim`. This can be used for multi-line properties like forementioned `noanim`, or for trigger collectibles like `trigger`.
+
 # API
 
 ## class Level
+
 - Level.headers -- Headers of the level. For example: color, gravity, total circles. It is a dictionary.
 - Level.objects -- Objects of the level. Not recommended to change it manually, use the provided methods instead. It is a list of Object class instances.
 
@@ -36,6 +42,7 @@ level.create_object("fixed_rectangle", ["1500", "1300", "50", "50", "45"])
 - Level.remove_object_by_id(id) - Removes an object which matches the id.
 
 ## class Object
+
 - Object. id -- Object's integer id, not a string.
 - Object.type -- Object's type as a string. See all types in the further section.
 - Object.props -- Array of every object's prop. It is stuff like position or rotation. P.S. there isn't any documentation of every prop of every object.
@@ -44,6 +51,7 @@ level.create_object("fixed_rectangle", ["1500", "1300", "50", "50", "45"])
 ## Object types
 
 Format: object type -> corresponding type in the level's text file
+
 - fixed_circle -> c
 - fixed_rectangle -> b
 - triangle -> t
@@ -72,7 +80,7 @@ Format: object type -> corresponding type in the level's text file
 
 ## Header types
 
-- totalCircles -> totalCircles 
+- totalCircles -> totalCircles
 - editorTool -> / EDITOR_TOOL
 - editorView -> / EDITOR_VIEW
 - edit -> / EDT

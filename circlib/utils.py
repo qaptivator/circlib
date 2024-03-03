@@ -68,7 +68,7 @@ def value_to_string(v):
     if isinstance(v, int) or isinstance(v, float):
         return str(v)
     else:
-        if v.startswith("'") and v.endswith("'"):
+        if (v.startswith("'") and v.endswith("'")) or v.startswith("\n"):
             return v
         else:
             return f"'{v}'"
