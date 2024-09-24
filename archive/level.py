@@ -1,11 +1,10 @@
 from .utils import *
 from .constants import *
-import objects
-from objects.base import BaseObject
+from .object import Object
 
 class Level:
     headers: dict[str, list[str]] = {}
-    objects: list[BaseObject] = []
+    objects: list[Object] = []
 
     def __init__(self, headers = DEFAULT_HEADERS, objects = []):
         self.headers = headers
@@ -14,7 +13,7 @@ class Level:
     @staticmethod
     def parse(s: str):
         headers: dict[str, list[str]] = {}
-        objects: list[BaseObject] = []
+        objects: list[Object] = []
 
         lines = s.strip().split("\n")[3:] # first 3 lines are useless
         #temp_object = None
