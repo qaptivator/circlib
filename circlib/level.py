@@ -2,6 +2,25 @@ from .utils import *
 from .constants import *
 import objects
 from objects.base import BaseObject
+from headers.base import BaseHeader
+from dataclasses import dataclass
+
+'''
+/
+/ circloO level
+/ Made with circloO Level Editor
+totalCircles 7 0
+/ EDITOR_TOOL 14 collectcircles
+/ EDITOR_VIEW 1500 1500 1
+/ EDT 964
+/ _SAVE_TIME_1727472569000_END
+levelscriptVersion 8
+COLORS 229
+grav 1 270
+y 1516 1584 1 1 1
+bullet
+< 0
+'''
 
 class Level:
     headers: dict[str, list[str]] = {}
@@ -12,11 +31,14 @@ class Level:
         self.objects = objects
 
     @staticmethod
-    def parse(s: str):
+    def parse(level_code: str):
         headers: dict[str, list[str]] = {}
         objects: list[BaseObject] = []
 
-        lines = s.strip().split("\n")[3:] # first 3 lines are useless
+        level_code_strip = level_code.strip().splitlines() # it handles both lf and crlf
+
+
+        lines[0] !==
         #temp_object = None
         temp_object = {}
         # {

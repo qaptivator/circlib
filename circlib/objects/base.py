@@ -20,6 +20,7 @@ class LineOptions:
     numerics: list[int | float] # numeric arguments of the line
     strings: list[str] # string arguments of the line, doesnt include the code
     raw: list[str | int | float] # raw, separated by space, arguments of the line
+    is_comment: bool = False # does this line start with a '/'
 
 @dataclass
 class DeserializeOptions:
