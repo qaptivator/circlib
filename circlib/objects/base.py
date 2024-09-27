@@ -30,12 +30,10 @@ class DeserializeOptions:
 
 class BaseObject(ABC):
     ''' Base abstract class for all objects. 
-    type: str - 
-    ingame_type: str - used to detect the matching object from level code (e.g. 'fixed circle' object would have this set to 'c')'''
+    ingame_code: str - used to detect the matching object from level code (e.g. 'fixed circle' object would have this set to 'c')'''
 
     id: int = 0,
-    type: str = '',
-    ingame_type: str = '',
+    ingame_code: str = '',
 
     category: ObjectCategory = ObjectCategory.unknown,
 
