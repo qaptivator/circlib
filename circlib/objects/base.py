@@ -1,6 +1,7 @@
 from enum import Enum
 from ..level import Level
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
 class ObjectCategory(Enum):
     unknown = 0
@@ -12,6 +13,20 @@ class ObjectCategory(Enum):
     springy = 6 # springy rectangle
     generator = 7 # ball geneator, box generator
     special = 8 # portal, start, collectable
+
+@dataclass
+class LineOptions:
+    code: str # the code (first string)
+    numerics: list[int | float] # numeric arguments of the line
+    strings: list[str] # string arguments of the line, doesnt include the code
+    raw: list[str | int | float] # raw, separated by space, arguments of the line
+
+@dataclass
+class DeserializeOptions:
+    level: Level # the level which is currently being processed
+    object_index: int # index of code occurence in level code
+    target_line: LineOptions # the line where the code was detected
+    lines: list[LineOptions] # all lines between the end of previous object and the end of this object (between last '>' and this '>'), includes target_line.
 
 class BaseObject(ABC):
     ''' Base abstract class for all objects. 
@@ -38,10 +53,9 @@ class BaseObject(ABC):
         pass
 
     @abstractmethod
-    def deserialize(self, object_index: int):
+    def deserialize(self, options: DeserializeOptions):
         ''' Extract object's properties from level code.
-        This would be called on each object during level.parse()
-        object_index specifies the character position of the object's type in level code. '''
+        This would be called on each object during level.parse() '''
         pass
 
     @abstractmethod
