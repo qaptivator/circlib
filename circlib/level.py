@@ -83,6 +83,7 @@ class Level:
             numbers = line.numerics
             strings = line.strings
 
+
             if code == 'totalCircles':
                 if len(numbers) > 0:
                     if len(numbers) > 1:
