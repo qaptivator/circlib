@@ -37,8 +37,6 @@ class Level:
 
         level_code_strip = level_code.strip().splitlines() # it handles both lf and crlf
 
-
-        lines[0] !==
         #temp_object = None
         temp_object = {}
         # {

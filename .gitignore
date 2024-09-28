@@ -160,4 +160,6 @@ cython_debug/
 #.idea/
 
 # Testing the library
-test.*.py
+# test.*.py
+
+depths.py

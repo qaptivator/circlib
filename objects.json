@@ -1,0 +1,332 @@
+[
+    {
+        "id": 0,
+        "name": "obj_menu",
+        "depth": -10
+    },
+    {
+        "id": 1,
+        "name": "obj_createbigcircle",
+        "depth": 9000
+    },
+    {
+        "id": 2,
+        "name": "obj_renderer",
+        "depth": -20
+    },
+    {
+        "id": 3,
+        "name": "obj_createlevel",
+        "depth": 0
+    },
+    {
+        "id": 4,
+        "name": "obj_gameflowhandler",
+        "depth": 0
+    },
+    {
+        "id": 5,
+        "name": "obj_levelguihandler",
+        "depth": 1
+    },
+    {
+        "id": 6,
+        "name": "obj_notification",
+        "depth": -10
+    },
+    {
+        "id": 7,
+        "name": "obj_waitabit",
+        "depth": 0
+    },
+    {
+        "id": 8,
+        "name": "obj_musichandler",
+        "depth": 0
+    },
+    {
+        "id": 9,
+        "name": "obj_blackscreen",
+        "depth": 0
+    },
+    {
+        "id": 10,
+        "name": "obj_hintgetter",
+        "depth": 0
+    },
+    {
+        "id": 11,
+        "name": "obj_hintshower",
+        "depth": 100
+    },
+    {
+        "id": 12,
+        "name": "obj_showrotatewarning",
+        "depth": -10000
+    },
+    {
+        "id": 13,
+        "name": "obj_gamestarter",
+        "depth": 0
+    },
+    {
+        "id": 14,
+        "name": "obj_ratemanager",
+        "depth": 0
+    },
+    {
+        "id": 15,
+        "name": "obj_ads",
+        "depth": 0
+    },
+    {
+        "id": 16,
+        "name": "obj_screenshotter",
+        "depth": 0
+    },
+    {
+        "id": 17,
+        "name": "obj_leveltimes",
+        "depth": 0
+    },
+    {
+        "id": 18,
+        "name": "obj_autoscreenshotter",
+        "depth": 0
+    },
+    {
+        "id": 19,
+        "name": "obj_recorder",
+        "depth": 0
+    },
+    {
+        "id": 20,
+        "name": "obj_you",
+        "depth": 0
+    },
+    {
+        "id": 21,
+        "name": "obj_collectcircle",
+        "depth": 10
+    },
+    {
+        "id": 22,
+        "name": "obj_collectcircle_gravitychange",
+        "depth": 10
+    },
+    {
+        "id": 23,
+        "name": "obj_collectcircle_other",
+        "depth": 10
+    },
+    {
+        "id": 24,
+        "name": "obj_collectcircle_multi",
+        "depth": 10
+    },
+    {
+        "id": 25,
+        "name": "obj_collectcircle_creator",
+        "depth": 0
+    },
+    {
+        "id": 26,
+        "name": "obj_physicsinstance_mc",
+        "depth": 0
+    },
+    {
+        "id": 27,
+        "name": "obj_physicsinstance_mc_timed",
+        "depth": 0
+    },
+    {
+        "id": 28,
+        "name": "obj_creator_mc_timed",
+        "depth": 0
+    },
+    {
+        "id": 29,
+        "name": "obj_linemanager",
+        "depth": 0
+    },
+    {
+        "id": 30,
+        "name": "obj_physicsinstance_triangle",
+        "depth": 0
+    },
+    {
+        "id": 31,
+        "name": "obj_physicsinstance_triangle_mc",
+        "depth": 0
+    },
+    {
+        "id": 32,
+        "name": "obj_physicsinstance_block",
+        "depth": 0
+    },
+    {
+        "id": 33,
+        "name": "obj_physicsinstance_block_mc",
+        "depth": 0
+    },
+    {
+        "id": 34,
+        "name": "obj_chainmanager",
+        "depth": -1
+    },
+    {
+        "id": 35,
+        "name": "obj_ropejointmanager",
+        "depth": 15
+    },
+    {
+        "id": 36,
+        "name": "obj_pulleyjointmanager",
+        "depth": 15
+    },
+    {
+        "id": 37,
+        "name": "obj_distancejointmanager",
+        "depth": 15
+    },
+    {
+        "id": 38,
+        "name": "obj_frictionjointmanager",
+        "depth": 15
+    },
+    {
+        "id": 39,
+        "name": "obj_weldjointmanager",
+        "depth": 15
+    },
+    {
+        "id": 40,
+        "name": "obj_prismaticjointmanager",
+        "depth": 15
+    },
+    {
+        "id": 41,
+        "name": "obj_anyphyobject",
+        "depth": 0
+    },
+    {
+        "id": 42,
+        "name": "obj_physicsinstance_moveable",
+        "depth": 0
+    },
+    {
+        "id": 43,
+        "name": "obj_block_rotate",
+        "depth": 0
+    },
+    {
+        "id": 44,
+        "name": "obj_connectsomethingtothis",
+        "depth": 0
+    },
+    {
+        "id": 45,
+        "name": "obj_physicsinstance",
+        "depth": 0
+    },
+    {
+        "id": 46,
+        "name": "obj_vanisher",
+        "depth": 0
+    },
+    {
+        "id": 47,
+        "name": "obj_multifixtureinstance",
+        "depth": 0
+    },
+    {
+        "id": 48,
+        "name": "obj_test_softbodies",
+        "depth": 0
+    },
+    {
+        "id": 49,
+        "name": "solidsurfaces",
+        "depth": 0
+    },
+    {
+        "id": 50,
+        "name": "obj_zoomout",
+        "depth": 0
+    },
+    {
+        "id": 51,
+        "name": "obj_splash",
+        "depth": 0
+    },
+    {
+        "id": 52,
+        "name": "obj_splash_armor",
+        "depth": 0
+    },
+    {
+        "id": 53,
+        "name": "obj_splash_coolmath",
+        "depth": 0
+    },
+    {
+        "id": 54,
+        "name": "obj_leveleditor",
+        "depth": 0
+    },
+    {
+        "id": 55,
+        "name": "obj_le_drawmaincircles",
+        "depth": 9000
+    },
+    {
+        "id": 56,
+        "name": "obj_le_viewhandler",
+        "depth": 0
+    },
+    {
+        "id": 57,
+        "name": "obj_le_gui",
+        "depth": 0
+    },
+    {
+        "id": 58,
+        "name": "obj_le_edittool",
+        "depth": 0
+    },
+    {
+        "id": 59,
+        "name": "obj_le_exporter",
+        "depth": 0
+    },
+    {
+        "id": 60,
+        "name": "obj_le_par_levelelement",
+        "depth": 0
+    },
+    {
+        "id": 61,
+        "name": "obj_le_circle",
+        "depth": 0
+    },
+    {
+        "id": 62,
+        "name": "obj_le_rectangle",
+        "depth": 0
+    },
+    {
+        "id": 63,
+        "name": "obj_le_triangle",
+        "depth": 0
+    },
+    {
+        "id": 64,
+        "name": "obj_le_collectcircle",
+        "depth": 0
+    },
+    {
+        "id": 65,
+        "name": "obj_musicresumer",
+        "depth": 0
+    }
+]
