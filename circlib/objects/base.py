@@ -15,25 +15,16 @@ class ObjectCategory(Enum):
     special = 8 # portal, start, collectable
 
 class BaseObject(ABC):
-    ''' Base abstract class for all objects. 
-    id: int - used to identify object when linking objects during parsing. should not be modified outside of the library.
-    ingame_code: str - used to detect the matching object from level code (e.g. 'fixed circle' object would have this set to 'c')'''
+    ''' Base abstract class for all objects. '''
 
-    id: int = 0,
-    ingame_code: str = '',
+    ingame_type: str
 
-    def __init__(self, level: Level, *args):
+    def __init__(self, level: Level):
         self.level = level
-        self.create(args)
 
     def whoami(self):
         ''' Returns class name '''
         return type(self).__name__
-
-    @abstractmethod
-    def create(self, *args):
-        ''' Called on object initialization. '''
-        pass
 
     @abstractmethod
     def serialize(self) -> str:
@@ -41,3 +32,24 @@ class BaseObject(ABC):
         This would be called on each object during level.stringify() 
         You need to return valid level code, which will then get appended to the rest of the level. '''
         pass
+
+class PhysicsType(Enum):
+    none = -1 # y, ic
+    solid = 0 # c, b, LE_ARC_DESCRIPTION, curve
+    moveable = 1 # mb, mc, mcG
+    rotateable = 2 # rr, rc
+    growing = 3 # gc, rGr
+    springy = 5 # wr
+    generator = 6 # tmc, tmb
+    unknown = 7 # partR
+
+class PhysicalObject(BaseObject):
+    ''' Abstract class for objects, which exist physically (have XY coordinates). '''
+
+    physics_type: PhysicsType
+
+    def __init__(self, level: Level, x: float = 0, y: float = 0, physics_type: PhysicsType = PhysicsType.none):
+        super().__init__(level)
+        self.x = x
+        self.y = y
+        self.physics_type = physics_type

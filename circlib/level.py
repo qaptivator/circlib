@@ -69,22 +69,44 @@ class Level:
     @staticmethod
     def parse(level_code: str):
         level = Level()
-
         level_code_strip = level_code.strip().splitlines() # it handles both lf and crlf
 
-        last_object = {} # object[n]
-        previous_object = {} # object[n-1]
+        prev_object = {}
+        prev_prev_object = {}
 
         # get the objects
         level_code_iter = iter(level_code_strip)
-        for raw_line in level_code_iter:
-            line = sanitize_line(raw_line)
-            code = line.code
-            numbers = line.numerics
-            strings = line.strings
+        for line in level_code_iter:
+            parts = line.strip().split()
 
+            code = parts[0]
+            numbers = []
+            strings = []
+            stringsWithoutBrackets = []
+            for part in parts:
+                if is_numeric(part):
+                    numbers.append(to_numeric(part))
+                else:
+                    strings.append(str(part))
+                    stringsWithoutBrackets.append = str(part).replace("'", "")
 
-            if code == 'totalCircles':
+            numbersN = len(numbers)
+            stringsN = len(strings)
+
+            create_at = Vector2()
+
+            if numbersN >= 2:
+                create_at = Vector2(numbers[0], numbers[1])
+
+            match code:
+                case '*' | '=':
+                    pass
+                case 'c':
+                    pass
+
+        
+
+            '''if code == 'totalCircles':
                 if len(numbers) > 0:
                     if len(numbers) > 1:
                         level.headers.start_full = True if numbers[1] == 1 else False
@@ -105,7 +127,7 @@ class Level:
                     level.headers.editor_view = Vector2(numbers[0], numbers[1])
                     if len(numbers) > 2:
                         level.headers.editor_zoom = numbers[2]
-            elif code == 'EDITOR_TOOL':
+            elif code == 'EDITOR_TOOL':'''
 
 
         return level

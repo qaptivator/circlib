@@ -54,19 +54,19 @@ def is_numeric(v):
 def is_string(v):
     return not is_numeric(v)
 
-def sanitize_line(line: str) -> LineOptions:
+def sanitize_line(line: str):
         numerics = []
         strings = []
         code = ""
         is_comment = False
         raw = ""
     
-        args = line.strip().split()
-        for arg in args:
-            if is_string(arg):
-                strings.append(arg)
-            elif is_numeric(arg):
-                numerics.append(to_numeric(arg))
+        parts = line.strip().split()
+        for part in parts:
+            if is_numeric(part):
+                numerics.append(to_numeric(part))
+            else:
+                pass
 
         raw = args
 
@@ -77,7 +77,7 @@ def sanitize_line(line: str) -> LineOptions:
             if len(strings) >= 1:
                 code = strings[0]
 
-        return LineOptions(code, numerics, strings, raw, is_comment)
+        return code, numerics, strings
 
 class Vector2:
     x: float = 0

@@ -30,6 +30,8 @@ use pull requests to merge changes. and feel free to contribute!!
 - type - do not use types as referring to object's code, or as a object itself.
   refer to it as 'object' (about an instance) or 'code' (inside of level code).
   calling 'c' or 'fixed_cirlce' a type is INCORRECT (ive done this many times myself here but i wanna change this)
+- moveable - a moveable object, DO NOT USE MOVABLE.
+- rotateable - only rotateable.
 
 # ARCHIVE
 
