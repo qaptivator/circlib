@@ -23,16 +23,23 @@ bullet
 '''
 
 class EditorToolGroupEnum(Enum):
+    none = ''
     select = 'select'
     solids = 'solids'
     moveables = 'moveables'
     joints = 'joints'
-    collectcircles = 'collectcircles'
+    collect_circles = 'collectcircles'
+
+@dataclass
+class EditorTool:
+    group: EditorToolGroupEnum
+    name: str
+    index: int
 
 class EditorToolEnum(Enum):
-    move_view = 0,
-    select = 1,
-    box_select = 46,
+    move_view = EditorTool(EditorToolGroupEnum.none, 'move_view', 0)
+    select = EditorTool(EditorToolGroupEnum.select, 'select', 1)
+    box_select = EditorTool(EditorToolGroupEnum.select, 'box_select', 46),
     delete_object = 13,
 
 
@@ -47,7 +54,7 @@ class LevelHeaders:
     starting_gravity_dir: float = 270 # 270 is down
     editor_view: Vector2 = Vector2(1500, 1500)
     editor_zoom: float = 1
-    editor_tool_group:
+    editor_tool_group: EditorToolGroupEnum = EditorToolGroupEnum.none
 
 
 class Level:
