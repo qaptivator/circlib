@@ -3,7 +3,7 @@ from .constants import *
 import objects
 from objects.base import BaseObject
 from dataclasses import dataclass
-
+from enum import Enum
 
 '''
 /
@@ -22,8 +22,24 @@ bullet
 < 0
 '''
 
+class EditorToolGroupEnum(Enum):
+    1 =1
+
+@dataclass
+class LevelHeaders:
+    start_full: bool = False
+    level_segments: int = 7
+    levelscript_version: int = LATEST_LEVELSCRIPT_VERSION
+    color: int = 0 # hsv(color, 210, 255)
+    starting_gravity: float = 0
+    starting_gravity_dir: float = 270 # 270 is down
+    editor_view: Vector2 = Vector2(1500, 1500)
+    editor_zoom: float = 1
+    editor_tool_group:
+
+
 class Level:
-    headers: dict[str, any] = {}
+    headers: LevelHeaders = LevelHeaders()
     objects: list[BaseObject] = []
 
     def __init__(self, headers = [], objects = []):
@@ -52,27 +68,25 @@ class Level:
                 if len(numbers) > 0:
                     if len(numbers) > 1:
                         level.headers.start_full = True if numbers[1] == 1 else False
-                    else:
-                        level.headers.start_full = False
                     level.headers.level_segments = numbers[0]
-                else:
-                    level.headers.start_full = False
-                    level.headers.level_segments = 7
             elif code == 'levelscriptVersion':
                 if len(numbers) > 0:
                     level.headers.levelscript_version = numbers[0]
-                else:
-                    level.headers.levelscript_version = LATEST_LEVELSCRIPT_VERSION
             elif code == 'COLORS':
                 if len(numbers) > 0:
-                    level.headers.color = numbers[0] # hsv(color, 210, 255)
-                else:
-                    level.headers.color = 0
+                    level.headers.color = numbers[0]
             elif code == 'grav':
                 if len(numbers) > 0:
                     level.headers.starting_gravity = numbers[0]
-                else:
-                    level.headers.color = 0
+                    if len(numbers) > 1:
+                        level.headers.starting_gravity_dir = numbers[1]
+            elif code == 'EDITOR_VIEW':
+                if len(numbers) > 1:
+                    level.headers.editor_view = Vector2(numbers[0], numbers[1])
+                    if len(numbers) > 2:
+                        level.headers.editor_zoom = numbers[2]
+            elif code == 'EDITOR_TOOL':
+
 
         return level
     

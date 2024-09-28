@@ -79,7 +79,12 @@ def sanitize_line(line: str) -> LineOptions:
 
         return LineOptions(code, numerics, strings, raw, is_comment)
 
-
+class Vector2:
+    x: float = 0
+    y: float = 0
+    def __init__(self, x: float = 0, y: float = 0):
+        self.x = x
+        self.y = y
 
 
 def string_to_value(v):
