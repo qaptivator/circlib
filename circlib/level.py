@@ -23,7 +23,19 @@ bullet
 '''
 
 class EditorToolGroupEnum(Enum):
-    1 =1
+    select = 'select'
+    solids = 'solids'
+    moveables = 'moveables'
+    joints = 'joints'
+    collectcircles = 'collectcircles'
+
+class EditorToolEnum(Enum):
+    move_view = 0,
+    select = 1,
+    box_select = 46,
+    delete_object = 13,
+
+
 
 @dataclass
 class LevelHeaders:
