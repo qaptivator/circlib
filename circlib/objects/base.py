@@ -14,29 +14,13 @@ class ObjectCategory(Enum):
     generator = 7 # ball geneator, box generator
     special = 8 # portal, start, collectable
 
-@dataclass
-class LineOptions:
-    code: str # the code (first string)
-    numerics: list[int | float] # numeric arguments of the line
-    strings: list[str] # string arguments of the line, doesnt include the code
-    raw: list[str | int | float] # raw, separated by space, arguments of the line
-    is_comment: bool = False # does this line start with a '/'
-
-@dataclass
-class DeserializeOptions:
-    level: Level # the level which is currently being processed
-    object_index: int # index of code occurence in level code
-    target_line: LineOptions # the line where the code was detected
-    lines: list[LineOptions] # all lines between the end of previous object and the end of this object (between last '>' and this '>'), includes target_line.
-
 class BaseObject(ABC):
     ''' Base abstract class for all objects. 
+    id: int - used to identify object when linking objects during parsing. should not be modified outside of the library.
     ingame_code: str - used to detect the matching object from level code (e.g. 'fixed circle' object would have this set to 'c')'''
 
     id: int = 0,
     ingame_code: str = '',
-
-    category: ObjectCategory = ObjectCategory.unknown,
 
     def __init__(self, level: Level, *args):
         self.level = level
@@ -49,12 +33,6 @@ class BaseObject(ABC):
     @abstractmethod
     def create(self, *args):
         ''' Called on object initialization. '''
-        pass
-
-    @abstractmethod
-    def deserialize(self, options: DeserializeOptions):
-        ''' Extract object's properties from level code.
-        This would be called on each object during level.parse() '''
         pass
 
     @abstractmethod

@@ -1,5 +1,6 @@
 import json
 import re
+from dataclasses import dataclass
 
 def print_dict(d):
     print(json.dumps(d, sort_keys=True, indent=4))
@@ -24,29 +25,62 @@ def skip_iters(iter: iter, n: int = 1):
 def inv_map(m: dict[any, any]) -> dict[any, any]:
     return {v: k for k, v in m.items()}
 
+#def is_numeric(v):
+#    return re.match(r'^-?\d+\.?\d*$', v) is not None
+
+#def is_string(v):
+#    return not is_numeric(v)
+
+@dataclass
+class LineOptions:
+    code: str # the code (first string)
+    numerics: list[int | float] # numeric arguments of the line
+    strings: list[str] # string arguments of the line, doesnt include the code and the comment
+    raw: list[str | int | float] # raw, separated by space, arguments of the line
+    is_comment: bool = False # does this line start with a '/'
+
+def to_numeric(v):
+    try:
+        return int(v)
+    except ValueError:
+        try:
+            return float(v)
+        except ValueError:
+            return v
+        
 def is_numeric(v):
-    return re.match(r'^-?\d+\.?\d*$', v) is not None
+    return isinstance(to_numeric(v), (int, float))
 
-#def value_to_string(value):
-#    if is_numeric(value): # isnumeric() and isdigit() doesn't work with fractions and negatives
-#        return f"{value}"
-#    else:
-#        if value.startswith("'") and value.endswith("'"):
-#            return value
-#        else:
-#            return f"'{value}'"
+def is_string(v):
+    return not is_numeric(v)
 
-#def prop_to_value(value):
-    #if is_numeric(value):
-    #    return float(value)
-    #else:
-    #    return value
-#    if value.isdigit():
-#        return int(value)
-#    elif value.replace('.', '', 1).isdigit(): 
-#        return float(value)
-#    else:
-#        return value
+def sanitize_line(line: str) -> LineOptions:
+        numerics = []
+        strings = []
+        code = ""
+        is_comment = False
+        raw = ""
+    
+        args = line.strip().split()
+        for arg in args:
+            if is_string(arg):
+                strings.append(arg)
+            elif is_numeric(arg):
+                numerics.append(to_numeric(arg))
+
+        raw = args
+
+        if len(strings) >= 1:
+            if strings[0] == '/':
+                is_comment = True
+                strings = strings[1:]
+            if len(strings) >= 1:
+                code = strings[0]
+
+        return LineOptions(code, numerics, strings, raw, is_comment)
+
+
+
 
 def string_to_value(v):
     v = str(v)

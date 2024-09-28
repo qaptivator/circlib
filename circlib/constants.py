@@ -12,3 +12,5 @@ DEFAULT_HEADERS = {
     "colors": [166], # these are random
     "gravity": [1, 270]
 }
+
+LATEST_LEVELSCRIPT_VERSION = 8
