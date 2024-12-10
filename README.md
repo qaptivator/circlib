@@ -1,8 +1,12 @@
 # circlib
 
 Python library for creating and editing CircloO levels
-Currently the library isn't hosted on PyPi, so instead, just clone the repository and then extract the `circlib` folder.
-`git clone https://github.com/qaptivator/circlib.git`
+
+**Install**
+
+```bash
+pip install git+https://github.com/qaptivator/circlib.git
+```
 
 This library is under reworking, so the documentation is work in progress.
 

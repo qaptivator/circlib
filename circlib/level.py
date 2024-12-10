@@ -5,6 +5,8 @@ from objects.base import BaseObject
 from dataclasses import dataclass
 from enum import Enum
 
+# look at level importing in gml_GlobalScript_le_import
+
 '''
 /
 / circloO level
