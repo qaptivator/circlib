@@ -3,7 +3,7 @@ from ..level import Level
 
 # TODO: make deserialization
 
-class CircleObject(PhysicalObject):
+class obj_FixedCircle(PhysicalObject):
     ingame_type: str = 'c'
     radius: float
 
@@ -11,7 +11,7 @@ class CircleObject(PhysicalObject):
         super().__init__(level, x, y, PhysicsType.solid)
         self.radius = radius
 
-class MoveableCircleObject(PhysicalObject):
+class obj_MoveableCircle(PhysicalObject):
     ingame_type: str = 'mcG'
     radius: float
     density: float
@@ -32,7 +32,7 @@ class MoveableCircleObject(PhysicalObject):
         self.damping = damping
 
 # TODO: find out what this object even is
-class MoveableCircleStaticObject(PhysicalObject):
+class obj_MoveableCircleStatic(PhysicalObject):
     ingame_type: str = 'mc'
     radius: float
     density: float
@@ -52,7 +52,7 @@ class MoveableCircleStaticObject(PhysicalObject):
         self.density = density
         self.damping = damping
 
-class GrowingCircleObject(PhysicalObject):
+class obj_GrowingCircle(PhysicalObject):
     ingame_type: str = 'gc'
     radius: float
 
@@ -60,7 +60,7 @@ class GrowingCircleObject(PhysicalObject):
         super().__init__(level, x, y, PhysicsType.growing)
         self.radius = radius
 
-class GeneratorCircleStaticObject(PhysicalObject):
+class obj_GeneratorCircle(PhysicalObject):
     ingame_type: str = 'tmc'
     radius: float
     density: float
@@ -77,8 +77,8 @@ class GeneratorCircleStaticObject(PhysicalObject):
             radius: float = 0,
             density: float = 1,
             #damping: float = 0,
-            alive_time: float = 0, # TODO: find out the default parameters
-            inbetween_time: float = 0,
+            alive_time: float = 5, # TODO: find out the default parameters
+            inbetween_time: float = 1,
             delay_time: float = 0
         ):
         super().__init__(level, x, y, PhysicsType.generator)
